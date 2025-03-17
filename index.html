@@ -3,6 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <!-- Icone per dispositivi -->
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <!-- Colore barra su mobile -->
+  <meta name="theme-color" content="#e53935">
+
+<!-- Service worker registration -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(() => console.log('✅ Service Worker registrato'))
+      .catch((error) => console.log('❌ Errore nel Service Worker:', error));
+  }
+</script>
   <title>Contrazioni</title>
   <style>
     body {
