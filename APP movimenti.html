@@ -1,0 +1,81 @@
+
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contrazioni</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px 20px;
+      background: #fefefe;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    #counter {
+      font-size: 3rem;
+      margin: 20px 0;
+    }
+
+    button {
+      font-size: 1.5rem;
+      padding: 20px 40px;
+      background-color: #e53935;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .log {
+      margin-top: 30px;
+      max-height: 300px;
+      overflow-y: auto;
+      text-align: left;
+    }
+
+    .log-entry {
+      padding: 6px 0;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>Registro Contrazioni</h1>
+  <div id="counter">0</div>
+  <button onclick="registerContraction()">Segna Contrazione</button>
+
+  <div class="log" id="log"></div>
+
+  <script>
+    let contractions = [];
+
+    // Carica da localStorage
+    if (localStorage.getItem('contractions')) {
+      contractions = JSON.parse(localStorage.getItem('contractions'));
+      updateUI();
+    }
+
+    function registerContraction() {
+      const now = new Date();
+      contractions.push(now.toISOString());
+      localStorage.setItem('contractions', JSON.stringify(contractions));
+      updateUI();
+    }
+
+    function updateUI() {
+      document.getElementById('counter').textContent = contractions.length;
+      const log = document.getElementById('log');
+      log.innerHTML = contractions.map((c, i) => {
+        const date = new Date(c);
+        const time = date.toLocaleTimeString();
+        return `<div class="log-entry">${i + 1}. ${time}</div>`;
+      }).join('');
+    }
+  </script>
+</body>
+</html>
