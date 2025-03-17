@@ -63,7 +63,7 @@
   <h1>Registro Contrazioni</h1>
   <div id="counter">0</div>
   <button onclick="registerContraction()">Segna Contrazione</button>
-
+  <button onclick="newDay()">Nuovo giorno</button>
   <div class="log" id="log"></div>
 
   <script>
@@ -90,6 +90,12 @@
         const time = date.toLocaleTimeString();
         return `<div class="log-entry">${i + 1}. ${time}</div>`;
       }).join('');
+    }
+    function newDay() {
+       localStorage.removeItem('contractions');
+       contractions = [];
+       updateUI();
+       alert('Dati cancellati');
     }
   </script>
 </body>
