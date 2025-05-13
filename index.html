@@ -79,8 +79,8 @@
   <script>
     let contractions = [];
     let pipi = [];
-    let senodx = [];
-    let senosx = [];
+    let senoDx = [];
+    let senoSx = [];
 
     // Carica da localStorage
     if (localStorage.getItem('contractions')) {
@@ -93,13 +93,13 @@
       updateUI();
     }
        // Carica da localStorage
-    if (localStorage.getItem('senosx')) {
-      senosx = JSON.parse(localStorage.getItem('senosx'));
+    if (localStorage.getItem('senoSx')) {
+      senoSx = JSON.parse(localStorage.getItem('senoSx'));
       updateUI();
     }
        // Carica da localStorage
-    if (localStorage.getItem('senodx')) {
-      senodx = JSON.parse(localStorage.getItem('senodx'));
+    if (localStorage.getItem('senoDx')) {
+      senoDx = JSON.parse(localStorage.getItem('senoDx'));
       updateUI();
     }
     function registerContraction() {
