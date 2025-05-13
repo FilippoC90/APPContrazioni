@@ -129,30 +129,19 @@
     }
     function updateUI() {
       document.getElementById('counter').textContent = contractions.length;
-      document.getElementById('counterPipi').textContent = pipi.length;
-      document.getElementById('counterSenoSx').textContent = senoSx.length;
-      document.getElementById('counterSenoDx').textContent = senoDx.length;
-      const log = document.getElementById('log');
-      log.innerHTML = contractions.map((c, i) => {
-        const date = new Date(c);
-        const time = date.toLocaleTimeString();
-        return `<div class="log-entry">${i + 1}. ${time}</div>`;
-      }).join('');
-       log.innerHTML = pipi.map((c, i) => {
-        const date = new Date(c);
-        const time = date.toLocaleTimeString();
-        return `<div class="log-entry">${i + 1}. ${time}</div>`;
-      }).join('');
-       log.innerHTML = senoSx.map((c, i) => {
-        const date = new Date(c);
-        const time = date.toLocaleTimeString();
-        return `<div class="log-entry">${i + 1}. ${time}</div>`;
-      }).join('');
-       log.innerHTML = senoDx.map((c, i) => {
-        const date = new Date(c);
-        const time = date.toLocaleTimeString();
-        return `<div class="log-entry">${i + 1}. ${time}</div>`;
-      }).join('');
+  const log = document.getElementById('log');
+  log.innerHTML = '';
+
+  const buildEntries = (list, label) => list.map((c, i) => {
+    const date = new Date(c);
+    const time = date.toLocaleTimeString();
+    return `<div class="log-entry">${label} ${i + 1}: ${time}</div>`;
+  }).join('');
+
+  log.innerHTML += buildEntries(contractions, 'Contrazione');
+  log.innerHTML += buildEntries(pipi, 'Pipi');
+  log.innerHTML += buildEntries(senoSx, 'Seno SX');
+  log.innerHTML += buildEntries(senoDx, 'Seno DX');
     }
     function newDay() {
        localStorage.removeItem('contractions');
