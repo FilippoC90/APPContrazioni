@@ -109,6 +109,24 @@
       updateUI();
     }
 
+    function registerPipi() {
+      const now = new Date();
+      pipi.push(now.toISOString());
+      localStorage.setItem('pipi', JSON.stringify(pipi));
+      updateUI();
+    }
+    function registersenoSx() {
+      const now = new Date();
+      senoSx.push(now.toISOString());
+      localStorage.setItem('senoSx', JSON.stringify(senoSx));
+      updateUI();
+    }
+    function registersenoDx() {
+      const now = new Date();
+      senoDx.push(now.toISOString());
+      localStorage.setItem('senoDx', JSON.stringify(senoDx));
+      updateUI();
+    }
     function updateUI() {
       document.getElementById('counter').textContent = contractions.length;
       const log = document.getElementById('log');
@@ -120,7 +138,13 @@
     }
     function newDay() {
        localStorage.removeItem('contractions');
-       contractions = [];
+      contractions = [];
+       localStorage.removeItem('pipi');
+       pipi = [];
+       localStorage.removeItem('senoSx');
+       senoSx = [];
+       localStorage.removeItem('senoDx');
+       senoDx = [];
        updateUI();
        alert('Dati cancellati');
     }
