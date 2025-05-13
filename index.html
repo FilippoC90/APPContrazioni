@@ -138,6 +138,21 @@
         const time = date.toLocaleTimeString();
         return `<div class="log-entry">${i + 1}. ${time}</div>`;
       }).join('');
+       log.innerHTML = pipi.map((c, i) => {
+        const date = new Date(c);
+        const time = date.toLocaleTimeString();
+        return `<div class="log-entry">${i + 1}. ${time}</div>`;
+      }).join('');
+       log.innerHTML = senoSx.map((c, i) => {
+        const date = new Date(c);
+        const time = date.toLocaleTimeString();
+        return `<div class="log-entry">${i + 1}. ${time}</div>`;
+      }).join('');
+       log.innerHTML = senoDx.map((c, i) => {
+        const date = new Date(c);
+        const time = date.toLocaleTimeString();
+        return `<div class="log-entry">${i + 1}. ${time}</div>`;
+      }).join('');
     }
     function newDay() {
        localStorage.removeItem('contractions');
