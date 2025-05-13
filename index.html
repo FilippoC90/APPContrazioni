@@ -63,7 +63,13 @@
 <body>
   <h1>Registro Movimenti</h1>
   <div id="counter">0</div>
-  <button onclick="registerContraction()">Segna Movimenti</button>
+  <button onclick="registerContraction()">Cacca</button>
+  <br>
+  <button onclick="registerPipi()">Pipì</button>
+  <br>
+  <button onclick="registersenoSx()">Seno SX</button>
+  <br>
+  <button onclick="registersenoDx()">Seno DX</button>
   <br>
   <br> 
   <br> 
@@ -72,13 +78,30 @@
 
   <script>
     let contractions = [];
+    let pipi = [];
+    let senodx = [];
+    let senosx = [];
 
     // Carica da localStorage
     if (localStorage.getItem('contractions')) {
       contractions = JSON.parse(localStorage.getItem('contractions'));
       updateUI();
     }
-
+       // Carica da localStorage
+    if (localStorage.getItem('pipi')) {
+      pipi = JSON.parse(localStorage.getItem('pipi'));
+      updateUI();
+    }
+       // Carica da localStorage
+    if (localStorage.getItem('senosx')) {
+      senosx = JSON.parse(localStorage.getItem('senosx'));
+      updateUI();
+    }
+       // Carica da localStorage
+    if (localStorage.getItem('senodx')) {
+      senodx = JSON.parse(localStorage.getItem('senodx'));
+      updateUI();
+    }
     function registerContraction() {
       const now = new Date();
       contractions.push(now.toISOString());
