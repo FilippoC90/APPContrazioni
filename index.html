@@ -67,9 +67,9 @@
   <br>
   <button onclick="registerPipi()">Pipi</button>
   <br>
-  <button onclick="registersenoSx()">senoSX</button>
+  <button onclick="registersenoSx()">senoSx</button>
   <br>
-  <button onclick="registersenoDx()">senoDX</button>
+  <button onclick="registersenoDx()">senoDx</button>
   <br>
   <br> 
   <br> 
@@ -129,6 +129,9 @@
     }
     function updateUI() {
       document.getElementById('counter').textContent = contractions.length;
+      document.getElementById('counterPipi').textContent = pipi.length;
+      document.getElementById('counterSenoSx').textContent = senoSx.length;
+      document.getElementById('counterSenoDx').textContent = senoDx.length;
       const log = document.getElementById('log');
       log.innerHTML = contractions.map((c, i) => {
         const date = new Date(c);
