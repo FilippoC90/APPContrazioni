@@ -1,24 +1,9 @@
-
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Manifest -->
-  <link rel="manifest" href="manifest.json">
-  <!-- Icone per dispositivi -->
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <!-- Colore barra su mobile -->
-  <meta name="theme-color" content="#e53935">
-
-<!-- Service worker registration -->
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(() => console.log('✅ Service Worker registrato'))
-      .catch((error) => console.log('❌ Errore nel Service Worker:', error));
-  }
-</script>
-  <title>Movimenti fetali</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Movimenti</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -31,18 +16,24 @@
       font-size: 2rem;
     }
 
-    #counter {
-      font-size: 3rem;
-      margin: 20px 0;
+    .counter {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+
+    .counter-value {
+      font-size: 2rem;
+      color: #e53935;
     }
 
     button {
       display: block;
-      font-size: 1.5rem;
-      padding: 20px 40px;
+      font-size: 1.2rem;
+      padding: 15px 30px;
+      margin: 10px auto;
       background-color: #e53935;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       color: white;
       cursor: pointer;
     }
@@ -62,99 +53,68 @@
 </head>
 <body>
   <h1>Registro Movimenti</h1>
-  <div id="counter">0</div>
-  <button onclick="registerContraction()">Cacca</button>
-  <br>
-  <button onclick="registerPipi()">Pipi</button>
-  <br>
-  <button onclick="registersenoSx()">senoSx</button>
-  <br>
-  <button onclick="registersenoDx()">senoDx</button>
-  <br>
-  <br> 
-  <br> 
+
+  <div class="counter">Cacca: <span id="count-cacca" class="counter-value">0</span></div>
+  <button onclick="registerEvent('cacca')">Cacca</button>
+
+  <div class="counter">Pipi: <span id="count-pipi" class="counter-value">0</span></div>
+  <button onclick="registerEvent('pipi')">Pipi</button>
+
+  <div class="counter">Seno SX: <span id="count-senoSx" class="counter-value">0</span></div>
+  <button onclick="registerEvent('senoSx')">Seno SX</button>
+
+  <div class="counter">Seno DX: <span id="count-senoDx" class="counter-value">0</span></div>
+  <button onclick="registerEvent('senoDx')">Seno DX</button>
+
+  <br><br>
   <button onclick="newDay()">Nuovo giorno</button>
+
   <div class="log" id="log"></div>
 
   <script>
-    let contractions = [];
-    let pipi = [];
-    let senoDx = [];
-    let senoSx = [];
+    const eventTypes = ['cacca', 'pipi', 'senoSx', 'senoDx'];
+    const events = {};
 
-    // Carica da localStorage
-    if (localStorage.getItem('contractions')) {
-      contractions = JSON.parse(localStorage.getItem('contractions'));
-      updateUI();
-    }
-       // Carica da localStorage
-    if (localStorage.getItem('pipi')) {
-      pipi = JSON.parse(localStorage.getItem('pipi'));
-      updateUI();
-    }
-       // Carica da localStorage
-    if (localStorage.getItem('senoSx')) {
-      senoSx = JSON.parse(localStorage.getItem('senoSx'));
-      updateUI();
-    }
-       // Carica da localStorage
-    if (localStorage.getItem('senoDx')) {
-      senoDx = JSON.parse(localStorage.getItem('senoDx'));
-      updateUI();
-    }
-    function registerContraction() {
-      const now = new Date();
-      contractions.push(now.toISOString());
-      localStorage.setItem('contractions', JSON.stringify(contractions));
+    // Inizializza arrays e carica da localStorage
+    eventTypes.forEach(type => {
+      const stored = localStorage.getItem(type);
+      events[type] = stored ? JSON.parse(stored) : [];
+    });
+
+    function registerEvent(type) {
+      const now = new Date().toISOString();
+      events[type].push(now);
+      localStorage.setItem(type, JSON.stringify(events[type]));
       updateUI();
     }
 
-    function registerPipi() {
-      const now = new Date();
-      pipi.push(now.toISOString());
-      localStorage.setItem('pipi', JSON.stringify(pipi));
-      updateUI();
-    }
-    function registersenoSx() {
-      const now = new Date();
-      senoSx.push(now.toISOString());
-      localStorage.setItem('senoSx', JSON.stringify(senoSx));
-      updateUI();
-    }
-    function registersenoDx() {
-      const now = new Date();
-      senoDx.push(now.toISOString());
-      localStorage.setItem('senoDx', JSON.stringify(senoDx));
-      updateUI();
-    }
     function updateUI() {
-      document.getElementById('counter').textContent = contractions.length;
-  const log = document.getElementById('log');
-  log.innerHTML = '';
+      eventTypes.forEach(type => {
+        document.getElementById(`count-${type}`).textContent = events[type].length;
+      });
 
-  const buildEntries = (list, label) => list.map((c, i) => {
-    const date = new Date(c);
-    const time = date.toLocaleTimeString();
-    return `<div class="log-entry">${label} ${i + 1}: ${time}</div>`;
-  }).join('');
+      const log = document.getElementById('log');
+      log.innerHTML = '';
 
-  log.innerHTML += buildEntries(contractions, 'Contrazione');
-  log.innerHTML += buildEntries(pipi, 'Pipi');
-  log.innerHTML += buildEntries(senoSx, 'Seno SX');
-  log.innerHTML += buildEntries(senoDx, 'Seno DX');
+      eventTypes.forEach(type => {
+        events[type].forEach((entry, i) => {
+          const time = new Date(entry).toLocaleTimeString();
+          log.innerHTML += `<div class="log-entry">${type.toUpperCase()} ${i + 1}: ${time}</div>`;
+        });
+      });
     }
+
     function newDay() {
-       localStorage.removeItem('contractions');
-      contractions = [];
-       localStorage.removeItem('pipi');
-       pipi = [];
-       localStorage.removeItem('senoSx');
-       senoSx = [];
-       localStorage.removeItem('senoDx');
-       senoDx = [];
-       updateUI();
-       alert('Dati cancellati');
+      eventTypes.forEach(type => {
+        localStorage.removeItem(type);
+        events[type] = [];
+      });
+      updateUI();
+      alert('Dati cancellati');
     }
+
+    // Mostra dati salvati
+    updateUI();
   </script>
 </body>
 </html>
